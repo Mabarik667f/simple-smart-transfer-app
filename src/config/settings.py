@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os.path
 from pathlib import Path
 from dotenv import load_dotenv
+from web3 import Web3
 
 load_dotenv()
 
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'blockchain.apps.BlockchainConfig',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +59,9 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -65,6 +69,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'blockchain.context_processors.get_main_context',
             ],
         },
     },
@@ -171,3 +176,6 @@ LOGIN_REDIRECT_URL = 'home'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CSRF_TRUSTED_ORIGINS = []
+
+GANACHE_URL = "HTTP://127.0.0.1:7545"
+WEB3: Web3 = Web3(Web3.HTTPProvider(GANACHE_URL))

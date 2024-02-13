@@ -18,5 +18,5 @@ typing_extensions==4.9.0
 tzdata==2023.4
 vine==5.1.0
 wcwidth==0.2.13
-
+web3==6.15.1
 python-dotenv~=1.0.1

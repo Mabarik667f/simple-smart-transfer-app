@@ -3,9 +3,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link type="text/css" href="{% static 'blockchain/css/styles.css' %}" rel="stylesheet">
     <title>{% block title %}{% endblock %}</title>
 </head>
+<header>
+    {% for i in main_menu %}
+    <div>
+        <a href="{% url i.url_name %}">{{ i.title }}</a>
+    </div>
+    {% endfor %}
+</header>
 <body>
-
+{% block content %}
+{% endblock %}
 </body>
 </html>

@@ -4,7 +4,7 @@ services:
   web:
     build:
       context: src
-      dockerfile: src/Dockerfile
+      dockerfile: Dockerfile
     command: python manage.py runserver 0.0.0.0:8000
     container_name: web
     volumes:
