@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blockchain.apps.BlockchainConfig',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -157,6 +158,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 FIXTURE_DIRS = '/fixtures/'
 
 AUTHENTICATION_BACKENDS = [
+    'blockchain.blockchain_auth_backend.BlockchainAuthBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
@@ -166,8 +168,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
-LOGOUT_REDIRECT_URL = 'login'
-LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'profile'
 
 
 # Default primary key field type
