@@ -15,7 +15,6 @@ contract App {
         address recipient;
         uint amount;
         uint timestamp;
-        bool status;
     }
 
     mapping (address => User) public users;
@@ -43,31 +42,38 @@ contract App {
     }
 
     function getData(address targetAddress) public view returns(string memory) {
-        require(users[targetAddress].exists, "Account not found");
         return users[targetAddress].name;
     }
 
-    function sendTransferTo(address _recipient) public payable {
+    function sendTransferTo(address payable _recipient) public payable {
         require(msg.value > 0, "Not money");
         require(msg.sender != _recipient, "Can't send to yourself");
-        transferHistory.push(Transfer(msg.sender, _recipient, msg.value, block.timestamp, false));
+        _recipient.transfer(msg.value);
+        transferHistory.push(Transfer(msg.sender, _recipient, msg.value, block.timestamp));
     }
 
-    function confirmToTransfer(uint _indx) public payable {
-        require(_indx < transferHistory.length, "Index out of range");
-        require(transferHistory[_indx].status == false, "Transfer is completed");
-        require(transferHistory[_indx].recipient == msg.sender, "You're not a recipient");
-        payable(transferHistory[_indx].recipient).transfer(transferHistory[_indx].amount);
-        transferHistory[_indx].status = true;
+    function getAllTransfersBySender() public view returns (address[] memory, uint[] memory, uint[] memory){
+        uint count = 0;
+
+        address[] memory recipients = new address[](4);
+        uint[] memory amounts = new uint[](4);
+        uint[] memory timestamps = new uint[](4);
+        require(transferHistory.length > 0, "No transactions");
+
+        for (uint i = transferHistory.length; i > 0 && count < 4; i--) {
+            if (transferHistory[i - 1].sender == msg.sender) {
+                recipients[count] = transferHistory[i - 1].recipient;
+                amounts[count] = transferHistory[i - 1].amount;
+                timestamps[count] = transferHistory[i - 1].timestamp;
+                count++;
+            }
+        }
+
+        return (recipients, amounts, timestamps);
     }
 
     function getTransferHistory() public view returns (uint) {
         return transferHistory.length;
     }
 
-    function getTransferDetailsByIndex(uint _indx) public view returns (address, address, uint, uint, bool) {
-        require(_indx < transferHistory.length, "Index out of range");
-        return (transferHistory[_indx].sender, transferHistory[_indx].recipient, transferHistory[_indx].amount,
-        transferHistory[_indx].timestamp, transferHistory[_indx].status);
-    }
 }
