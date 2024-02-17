@@ -1,22 +1,22 @@
 {% extends "base.html" %}
 
-{% block title %} Register {% endblock %}
+{% block title %} Перевод {% endblock %}
 
 {% block content %}
 <div class="reg-form main-view">
-    <h1 class="form-header">Регистрация</h1>
+    <h1 class="form-header">Перевод</h1>
     <div class="form-error">{{ form.non_field_errors }}</div>
+    <p>Перевод происходит по его открытому ключу</p>
 <form method="post">
     {% csrf_token %}
     <input type="hidden" name="next" value="{{ next }}">
     {% for f in form %}
     <div class="form-container"><label class="form-label">{{ f.label }}</label>{{ f }}</div>
     <div class="form-error">{{ f.errors }}</div>
+
     {% endfor %}
 
-    <div class="button-container">
-        <button type="submit" class="form-button-submit register-submit-button ">Зарегистрироваться</button>
-    </div>
+    <div class="button-container"><button type="submit" class="form-button-submit">Перевести</button></div>
 </form>
 </div>
 {% endblock %}

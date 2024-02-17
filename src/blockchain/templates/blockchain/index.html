@@ -3,7 +3,18 @@
 {% block title %} Main {% endblock %}
 
 {% block content %}
-<div class="start-menu">
+<div class="main-view">
+    <h1>Fast Transaction ETH</h1>
+    <h3>Мы предлогаем:</h3>
+    <ul class="start-description">
+        <li>Удобные переводы</li>
+        <li>Просмотр истории транзакций</li>
+        <li>Безопасное взаимодействие с блокчейном</li>
+    </ul>
+    <div class="buttons-start">
+    <a href="{% url 'register' %}" class="reg-button button-start">Начать</a>
+    <a href="{% url 'login' %} " class="login-button button-start">Войти</a>
+    </div>
 
 </div>
 {% endblock %}

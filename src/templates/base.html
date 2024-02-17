@@ -6,13 +6,22 @@
     <link type="text/css" href="{% static 'blockchain/css/styles.css' %}" rel="stylesheet">
     <title>{% block title %}{% endblock %}</title>
 </head>
-<header>
+<header class="main-menu">
+    {%  if user.is_authenticated %}
+    <div class="logout">
+        <form id="logout-form" action="{% url 'logout' %}" method="post" class="main-menu-elem">
+        {% csrf_token %}
+        <button type="submit" class="main-menu-button logout-button">Выйти</button>
+        </form>
+    </div>
+    {% endif %}
     {% for i in main_menu %}
-    <div>
-        <a href="{% url i.url_name %}">{{ i.title }}</a>
+    <div class="main-menu-elem">
+        <a href="{% url i.url_name %}" class="main-menu-button">{{ i.title }}</a>
     </div>
     {% endfor %}
 </header>
+<hr>
 <body>
 {% block content %}
 {% endblock %}
