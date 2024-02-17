@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Профиль {% endblock %}
+
+{% block content %}
+<div class="profile">
+<div class="profile-items">
+    <h1 class="profile-item">{{ name }}</h1>
+    <div class="profile-item"><label>Открытый ключ: </label>{{ address }}</div>
+    <div class="profile-item"><label>Баланс в ETH: </label>{{ balance }}</div>
+    {% for elem in profile_menu %}
+        <div class="profile-item">
+            <a href="{% url elem.url_name %}" class="main-menu-button logout-button">{{ elem.title }}</a>
+        </div>
+    {% endfor %}
+</div>
+
+<ul class="last-transactions" id="last-transactions"> 
+    <h2>Последние транзакции</h2>
+</ul>
+</div>
+
+<script src="{% static 'blockchain/js/get_last_transactions.js' %}"></script>
+{% endblock %}
